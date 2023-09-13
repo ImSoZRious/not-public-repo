@@ -13,8 +13,8 @@ jobs:
       - name: Setup decryption key
         env:
           AES256_PASSPHRASE: ${{ secrets.AES256_PASSPHRASE }}
-        run: echo "$AES256_PASSPHRASE" > passphrase && export GPG_TTY=$(tty)
+        run: echo "$AES256_PASSPHRASE" > passphrase
       - name: Decrypt source code
-        run: cat passphrase | gpg --passphrase-fd 0 -d source.tar.gz.gpg | tar -zxvf -
+        run: gpg --passphrase-file passphrase -d source.tar.gz.gpg | tar -zxvf -
       - name: Run
         run: cargo run --release
