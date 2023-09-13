@@ -6,10 +6,10 @@ env:
   AES256_PASSPHRASE: ${{ secrets.AES256_PASSPHRASE }}
 
 jobs:
-  runs-on:
-    - ubuntu-22.04
   run:
     name: Run the code
+    runs-on:
+      - ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
