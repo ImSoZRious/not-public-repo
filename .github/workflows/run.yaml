@@ -13,8 +13,13 @@ jobs:
       - name: Setup decryption key
         env:
           AES256_PASSPHRASE: ${{ secrets.AES256_PASSPHRASE }}
-        run: echo "$AES256_PASSPHRASE" > passphrase
+        run: |
+          echo "$AES256_PASSPHRASE" > passphrase
+          echo use-agent >> ~/.gnupg/gpg.conf
+          echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
+          echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
+          echo RELOADAGENT | gpg-connect-agent
       - name: Decrypt source code
-        run: gpg --passphrase-file passphrase -d source.tar.gz.gpg | tar -zxvf -
+        run: gpg --no-tty --passphrase-file passphrase -d source.tar.gz.gpg | tar -zxvf -
       - name: Run
         run: cargo run --release
