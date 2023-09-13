@@ -15,6 +15,7 @@ jobs:
           AES256_PASSPHRASE: ${{ secrets.AES256_PASSPHRASE }}
         run: |
           echo "$AES256_PASSPHRASE" > passphrase
+          mkdir ~/.gnupg
           echo use-agent >> ~/.gnupg/gpg.conf
           echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
           echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
