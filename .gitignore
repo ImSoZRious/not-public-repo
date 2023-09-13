@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# except
+!.gitignore
+!source.tar.gz.gpg
+!README.md
