@@ -1,0 +1,17 @@
+name: Run
+on:
+  push: {}
+
+env:
+  AES256_PASSPHRASE: ${{ secrets.AES256_PASSPHRASE }}
+
+jobs:
+  run:
+    name: Run the code
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Decrypt repo
+        run: echo "$AES256_PASSPHRASE" | gpg --passphrase-fd 0 -d source.tar.gz.gpg | tar -zxvf -
+      - name: Run
+        run: cargo run --release
